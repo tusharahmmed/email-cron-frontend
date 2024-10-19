@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./mixin";
+
+@layer base {
+  // button,
+  // [type="button"],
+  // [type="reset"],
+  // [type="submit"],
+  // .ant-btn-primary {
+  //   background-color: #1677ff !important;
+  // }
+}
+.ant-btn-primary {
+  background-color: #1677ff !important;
+}
+.ant-btn-dangerous {
+  background-color: #ff4d4f !important;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  scroll-behavior: smooth;
+  font-family: var(--font-inter);
+}
+
+main {
+  // background: radial-gradient(
+  //     80.05% 80.05% at 80.59% 107.94%,
+  //     rgba(234, 0, 94, 0.1) 0%,
+  //     rgba(234, 0, 94, 0) 100%
+  //   ),
+  //   radial-gradient(
+  //     44.39% 44.39% at -2.94% 63.53%,
+  //     rgba(0, 183, 195, 0.1) 0%,
+  //     rgba(0, 183, 195, 0) 100%
+  //   ),
+  //   radial-gradient(
+  //     75.72% 161.92% at 183.02% -5.42%,
+  //     rgba(152, 62, 221, 0.1) 0%,
+  //     rgba(255, 140, 0, 0) 100%
+  //   ),
+  //   rgba(10, 11, 12, 0);
+
+  background: radial-gradient(
+      80.05% 80.05% at 80.59% 107.94%,
+      rgba(234, 0, 94, 0.1) 0%,
+      rgba(234, 0, 94, 0) 100%
+    ),
+    radial-gradient(
+      44.39% 44.39% at -2.94% 63.53%,
+      rgba(0, 183, 195, 0.1) 0%,
+      rgba(0, 183, 195, 0) 100%
+    ),
+    radial-gradient(
+      77.59% 77.59% at 91.47% 10%,
+      rgba(255, 140, 0, 0.1) 0%,
+      rgba(255, 140, 0, 0) 100%
+    ),
+    rgba(10, 11, 12, 0.05);
+  // background: radial-gradient(
+  //     18.97% 28.49% at 67.19% 61.12%,
+  //     rgba(221, 70, 62, 0.05) 0%,
+  //     rgba(234, 0, 94, 0) 100%
+  //   ),
+  //   radial-gradient(
+  //     44.39% 44.39% at -2.94% 63.53%,
+  //     rgba(0, 183, 195, 0.1) 0%,
+  //     rgba(0, 183, 195, 0) 100%
+  //   );
+
+  margin-top: 80px;
+}
+.section_padding {
+  padding-left: 5rem;
+  padding-right: 5rem;
+
+  @include xxl {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  @include lg {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  @include md {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  @include sm {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+ul > li > a.active {
+  color: #dd463e !important;
+}

@@ -1,0 +1,155 @@
+@import "../mixin";
+.section {
+  padding-top: 88px;
+  padding-bottom: 88px;
+}
+.title {
+  @apply font-sans text-center;
+
+  h2 {
+    color: var(--main-2, #0a0b0c);
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%; /* 76.8px */
+    letter-spacing: -1.28px;
+  }
+  h3 {
+    color: #dd463e;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%;
+    letter-spacing: -0.96px;
+  }
+}
+.itemWraper {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.item {
+  display: flex;
+  flex-wrap: nowrap;
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  &:last-child {
+    padding-bottom: 0px;
+  }
+}
+.item:nth-of-type(odd) {
+  display: flex;
+}
+.item:nth-of-type(even) {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.content {
+  @apply w-5/12 font-inter;
+
+  h3 {
+    @apply font-sans;
+    color: #0a0b0c;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%; /* 31.2px */
+    letter-spacing: -0.48px;
+    margin-bottom: 15px;
+  }
+  p {
+    color: var(--bw-black, #0a0b0c);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    margin-bottom: 15px;
+  }
+  span {
+    color: #dd463e;
+    text-align: right;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 27px */
+    letter-spacing: 0.18px;
+    text-decoration-line: underline;
+    cursor: pointer;
+  }
+}
+.imageWraper {
+  @apply w-6/12;
+}
+
+@include md {
+  .title {
+    h2 {
+      font-size: 44px;
+    }
+    h3 {
+      font-size: 36px;
+    }
+  }
+  .itemWraper {
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+  .item {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+@include sm {
+  .title {
+    h2 {
+      font-size: 44px;
+    }
+    h3 {
+      font-size: 36px;
+    }
+  }
+  .item {
+    flex-direction: column;
+  }
+  .item:nth-of-type(odd) {
+    flex-direction: column;
+  }
+  .item:nth-of-type(even) {
+    flex-direction: column;
+  }
+  .content {
+    @apply w-10/12 font-inter;
+    order: 1;
+  }
+  .imageWraper {
+    @apply w-10/12;
+    margin-bottom: 40px;
+  }
+}
+@include xs {
+  .section {
+    padding-top: 68px;
+    padding-bottom: 68px;
+  }
+  .title {
+    h2 {
+      font-size: 32px;
+    }
+    h3 {
+      font-size: 24px;
+    }
+  }
+
+  .content {
+    @apply w-full;
+    order: 1;
+  }
+  .imageWraper {
+    @apply w-full;
+    margin-bottom: 40px;
+  }
+}

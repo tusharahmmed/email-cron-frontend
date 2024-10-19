@@ -1,0 +1,38 @@
+.formTitle {
+  @apply font-sans;
+  color: var(--black-black, #0a0b0c);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 30px */
+  margin-bottom: 24px;
+}
+.inputWraper {
+  margin-bottom: 24px;
+}
+.submit {
+  padding-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button {
+    @apply font-inter;
+
+    display: flex;
+    width: 150px;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #dd463e;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1),
+      0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;
+    color: var(--white-white, #fff);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 24px */
+  }
+}

@@ -1,0 +1,79 @@
+@import "../mixin";
+.section {
+  padding-top: 150px;
+  padding-bottom: 230px;
+}
+.content {
+  h2 {
+    @apply font-sans;
+    color: var(--main-2, #0a0b0c);
+    text-align: center;
+
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%; /* 83.2px */
+    letter-spacing: -1.28px;
+    margin-bottom: 48px;
+  }
+}
+.actions {
+  @apply font-inter flex items-center w-full justify-center;
+  gap: 24px;
+
+  button {
+    display: flex;
+    width: 232px;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 16px;
+    background: #dd463e;
+    color: var(--white-white, #fff);
+    text-align: center;
+
+    /* Big, Bold */
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 30px */
+  }
+}
+
+@include md {
+  .content {
+    h2 {
+      font-size: 44px;
+    }
+  }
+}
+@include sm {
+  .content {
+    h2 {
+      font-size: 34px;
+    }
+  }
+}
+@include xs {
+  .section {
+    padding-top: 80px;
+    padding-bottom: 130px;
+  }
+  .content {
+    h2 {
+      font-size: 30px;
+    }
+  }
+  .actions {
+    flex-direction: column;
+    gap: 16px;
+    button {
+      width: 180px;
+      padding: 12px 12px;
+      font-size: 18px;
+      border-radius: 12px;
+    }
+  }
+}
