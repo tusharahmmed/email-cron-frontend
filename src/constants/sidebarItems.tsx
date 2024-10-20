@@ -8,14 +8,10 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import {USER_ROLE} from "./role";
-import {useGetQuotesQuery} from "@/rtk/features/api/quoteApi";
 
 export const sidebarItems = (role: string) => {
   const query: Record<string, any> = {};
   query["status"] = "pending";
-
-  const {data, isLoading} = useGetQuotesQuery({...query});
-  const totalPending = data?.meta?.total;
 
   const defaultSidebarItems: MenuProps["items"] = [
     {
@@ -32,11 +28,7 @@ export const sidebarItems = (role: string) => {
       icon: <UnorderedListOutlined />,
       children: [
         {
-          label: (
-            <Link href={`/${role}/quote/pending`}>
-              Pending <Badge count={totalPending}></Badge>
-            </Link>
-          ),
+          label: <Link href={`/${role}/quote/pending`}>Pending</Link>,
           key: `/${role}/quote/pending`,
         },
         {
@@ -54,7 +46,11 @@ export const sidebarItems = (role: string) => {
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     ...quoteItems,
-
+    {
+      label: <Link href={`/${role}/provider`}>Provider</Link>,
+      key: "provider",
+      icon: <MailOutlined />,
+    },
     {
       label: <Link href={`/${role}/user`}>Manage User</Link>,
       icon: <UserOutlined />,

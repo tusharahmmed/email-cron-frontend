@@ -12,23 +12,20 @@ export const quoteStatusOptions = [
     value: "canceled",
   },
 ];
-export const userRoleOptions = [
+
+export const providerIMapProtocolOptions = [
   {
-    label: "Admin",
-    value: "admin",
+    label: "TLS",
+    value: "true",
   },
 ];
-export const userPermissionOptions = [
+export const providerProtocolOptions = [
   {
-    label: "Quote Manage",
-    value: "quotes",
+    label: "True",
+    value: "true",
   },
   {
-    label: "Driver Request",
-    value: "drivers",
-  },
-  {
-    label: "Customer Request",
-    value: "customers",
+    label: "False",
+    value: "false",
   },
 ];

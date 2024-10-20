@@ -5,21 +5,21 @@ import styles from "@/styles/ui/driver_request.module.scss";
 import FormTextArea from "../form/FormTextArea";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {driverRequestSchema} from "@/schemas/driver_request";
-import {useCreateDriverRequestMutation} from "@/rtk/features/api/driverApi";
+// import {useCreateDriverRequestMutation} from "@/rtk/features/api/driverApi";
 import {message} from "antd";
 
 const DriverRequest = () => {
-  const [createDriverRequest, {isLoading}] = useCreateDriverRequestMutation();
+  // const [createDriverRequest, {isLoading}] = useCreateDriverRequestMutation();
 
   const onSubmit = async (data: any) => {
     console.log(data);
 
     message.loading("Submitting.....");
     try {
-      const res = await createDriverRequest(data).unwrap();
-      if (res.id) {
-        message.success("Application submited successfully");
-      }
+      // const res = await createDriverRequest(data).unwrap();
+      // if (res.id) {
+      //   message.success("Application submited successfully");
+      // }
     } catch (err: any) {
       // console.error(err.message);
       message.error(err.message);
@@ -56,7 +56,9 @@ const DriverRequest = () => {
           />
         </div>
         <div className={styles.submit}>
-          <button disabled={isLoading} type="submit">
+          <button
+            //  disabled={isLoading}
+            type="submit">
             Sent
           </button>
         </div>

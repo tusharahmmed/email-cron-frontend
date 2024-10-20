@@ -1,31 +1,41 @@
 import Form from "@/components/form/Form";
 import FormInput from "@/components/form/FormInput";
-import FormMultiSelectField from "@/components/form/FormMultiSelectField";
+import FormInputNumber from "@/components/form/FormInputNumber";
 import FormSelectField from "@/components/form/FormSelectField";
 import FBreadCrumb from "@/components/ui/FBreadCrumb";
-import {userPermissionOptions, userRoleOptions} from "@/constants/global";
+import {
+  providerIMapProtocolOptions,
+  providerProtocolOptions,
+} from "@/constants/global";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import {useCreateUserMutation} from "@/rtk/features/api/userApi";
-import {createUserRequestSchema} from "@/schemas/user";
+import {
+  useGetProviderDetailsQuery,
+  useUpdateProviderMutation,
+} from "@/rtk/features/api/providerApi";
+
+import {updateProviderRequestSchema} from "@/schemas/provider";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Col, Row, message} from "antd";
-import {useRouter} from "next/navigation";
-import React from "react";
+import {useRouter} from "next/router";
 
-const CreateUserPage = () => {
-  const [createUser] = useCreateUserMutation();
+const EditUserPage = () => {
   const router = useRouter();
 
+  const id = router.query.id as string;
+
+  const {data: defaultValues} = useGetProviderDetailsQuery(id, {skip: !id});
+  const [updateProvider] = useUpdateProviderMutation();
+
   const onSubmit = async (values: any) => {
-    message.loading("Creating...");
+    message.loading("Updating...");
     try {
-      const res = await createUser(values).unwrap();
+      const res = await updateProvider({id: id, body: values}).unwrap();
       if (res?.id) {
-        message.success("User created successfully!");
-        router.push("/super_admin/user");
+        message.success("Provider updated successfully!");
+        router.push("/admin/provider");
       }
     } catch (err: any) {
-      console.error(err.message);
+      message.error(err.message);
     }
   };
 
@@ -43,12 +53,13 @@ const CreateUserPage = () => {
           },
         ]}
       />
-      <h1 className="text-2xl font-medium my-2">Create User</h1>
+      <h1 className="text-2xl font-medium my-2">Update User</h1>
 
       <div>
         <Form
           submitHandler={onSubmit}
-          resolver={yupResolver(createUserRequestSchema)}>
+          defaultValues={defaultValues}
+          resolver={yupResolver(updateProviderRequestSchema)}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -61,7 +72,7 @@ const CreateUserPage = () => {
                 fontSize: "18px",
                 marginBottom: "10px",
               }}>
-              User Information
+              Provider Information
             </p>
             <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
               <Col
@@ -70,7 +81,12 @@ const CreateUserPage = () => {
                 style={{
                   marginBottom: "10px",
                 }}>
-                <FormInput type="text" name="name" size="large" label="Name" />
+                <FormInput
+                  type="text"
+                  name="title"
+                  size="large"
+                  label="Title"
+                />
               </Col>
               <Col
                 className="gutter-row"
@@ -78,12 +94,15 @@ const CreateUserPage = () => {
                 style={{
                   marginBottom: "10px",
                 }}>
-                <FormInput
-                  type="text"
-                  name="serName"
-                  size="large"
-                  label="Ser Name"
-                />
+                <FormInput type="text" name="host" size="large" label="HOST" />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}>
+                <FormInputNumber name="port" size="large" label="PORT" />
               </Col>
               <Col
                 className="gutter-row"
@@ -119,9 +138,47 @@ const CreateUserPage = () => {
                 }}>
                 <FormSelectField
                   size="large"
-                  name="role"
-                  options={userRoleOptions}
-                  label="Role"
+                  name="secure"
+                  options={providerProtocolOptions}
+                  label="Secure"
+                  placeholder="Select"
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}></Col>
+            </Row>
+          </div>
+          <div
+            style={{
+              border: "1px solid #d9d9d9",
+              borderRadius: "5px",
+              padding: "15px",
+              marginBottom: "10px",
+            }}>
+            <p
+              style={{
+                fontSize: "18px",
+                marginBottom: "10px",
+              }}>
+              IMap Options
+            </p>
+            <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}>
+                <FormSelectField
+                  size="large"
+                  name="tls"
+                  options={providerIMapProtocolOptions}
+                  label="Protocol"
                   placeholder="Select"
                 />
               </Col>
@@ -131,12 +188,10 @@ const CreateUserPage = () => {
                 style={{
                   marginBottom: "10px",
                 }}>
-                <FormMultiSelectField
-                  name="permissions"
-                  label="Permissions"
+                <FormInputNumber
+                  name="imap_port"
                   size="large"
-                  placeholder="Select"
-                  options={userPermissionOptions}
+                  label="IMap port"
                 />
               </Col>
               <Col
@@ -149,7 +204,7 @@ const CreateUserPage = () => {
           </div>
 
           <Button htmlType="submit" type="primary">
-            Create
+            Update
           </Button>
         </Form>
       </div>
@@ -157,8 +212,8 @@ const CreateUserPage = () => {
   );
 };
 
-export default CreateUserPage;
+export default EditUserPage;
 
-CreateUserPage.getLayout = function getLayout(page: React.ReactElement) {
+EditUserPage.getLayout = function getLayout(page: React.ReactElement) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };

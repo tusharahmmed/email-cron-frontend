@@ -36,7 +36,7 @@ const SideBar = () => {
           marginBottom: ".5rem",
           padding: "10px 0px",
         }}>
-        4U
+        {collapsed ? "Ca" : "Campaign"}
       </div>
       <Menu
         theme="dark"

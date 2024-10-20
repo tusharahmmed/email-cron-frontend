@@ -76,20 +76,6 @@ const UserListPage = () => {
       },
     },
     {
-      title: "Permissions",
-      // dataIndex: "permissions",
-      render: (record: IUser) => {
-        if (record.role === USER_ROLE.SUPER_ADMIN) {
-          return <span className="font-medium uppercase">ALL</span>;
-        }
-        return record.permissions?.map((item, i) => (
-          <span key={i} className="font-medium uppercase">
-            {`${item} `}
-          </span>
-        ));
-      },
-    },
-    {
       title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {
