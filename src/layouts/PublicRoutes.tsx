@@ -10,7 +10,7 @@ const PublicRotes = ({children}: {children: React.ReactElement}) => {
 
   useEffect(() => {
     if (userLoggedIn) {
-      router.push("/profile");
+      router.push("/admin");
     }
     setIsLoading(true);
   }, [router, isLoading, userLoggedIn]);

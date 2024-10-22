@@ -1,20 +1,18 @@
-# 4U Logistics
+# Email Campaign
 
-A Logistics Web Application using `NEXT.js`
+An Email Campaign Web Application using `NEXT.js`
 
 ## Demo
 
-[Live Preview](https://4u-frontend.vercel.app/)
-
-## Screenshots
-
-![screenshot](https://github.com/tusharahmmed/4u_logistics_frontend/blob/main/screenshot1.png)
+[Live Preview](https://email-cron.vercel.app/)
 
 ## Features
 
 - Fully Functional Web Application using `Next.js`
-- Visitors can submit quotation for shipment, custome can submit delivery requests etc.
-- It has role based dashboard options where super admin can manage all website operations and crate new admin with specific permissions.
+- Admin can create Email Provider and update them.
+- Admin can create campaign and assign users.
+- Admin can run campaign and listen user response etc.
+- User response will dynamically update using imap and node cron.
 
 ## Technology Used
 
@@ -29,7 +27,7 @@ These all are firebase credentials.
 
 ## Backend of this project
 
-[Backend Repository](https://github.com/tusharahmmed/4u_logistics_backend)
+[Backend Repository](https://github.com/tusharahmmed/email-cron-backend)
 
 ## Copyright
 

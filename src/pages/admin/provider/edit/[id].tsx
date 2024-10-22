@@ -18,7 +18,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Col, Row, message} from "antd";
 import {useRouter} from "next/router";
 
-const EditUserPage = () => {
+const EditProviderPage = () => {
   const router = useRouter();
 
   const id = router.query.id as string;
@@ -44,16 +44,16 @@ const EditUserPage = () => {
       <FBreadCrumb
         items={[
           {
-            label: "super_admin",
-            link: "/profile",
+            label: "admin",
+            link: "/admin",
           },
           {
-            label: "user",
-            link: "/super_admin/user",
+            label: "provider",
+            link: "/admin/provider",
           },
         ]}
       />
-      <h1 className="text-2xl font-medium my-2">Update User</h1>
+      <h1 className="text-2xl font-medium my-2">Update Provider</h1>
 
       <div>
         <Form
@@ -212,8 +212,8 @@ const EditUserPage = () => {
   );
 };
 
-export default EditUserPage;
+export default EditProviderPage;
 
-EditUserPage.getLayout = function getLayout(page: React.ReactElement) {
+EditProviderPage.getLayout = function getLayout(page: React.ReactElement) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };

@@ -33,7 +33,6 @@ const Login = () => {
 
   const defaultValues = {
     email: "sakibahmmedtushar@gmail.com",
-    password: "123456",
   };
 
   return (

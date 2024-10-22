@@ -1,35 +1,55 @@
 import Form from "@/components/form/Form";
 import FormInput from "@/components/form/FormInput";
-import FormInputNumber from "@/components/form/FormInputNumber";
-import FormSelectField from "@/components/form/FormSelectField";
 import FBreadCrumb from "@/components/ui/FBreadCrumb";
-import {
-  providerIMapProtocolOptions,
-  providerProtocolOptions,
-} from "@/constants/global";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import {useCreateProviderMutation} from "@/rtk/features/api/providerApi";
-import {createProviderRequestSchema} from "@/schemas/provider";
+import {createCampaignRequestSchema} from "@/schemas/campaign";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Col, Row, message} from "antd";
 import {useRouter} from "next/navigation";
-import React from "react";
+import React, {useState} from "react";
+import dynamic from "next/dynamic";
+import FormProviderField from "@/components/form/FormProviderField";
+import FormEmailSelectField from "@/components/form/FormEmailSelectField";
+import {useCreateCampaignMutation} from "@/rtk/features/api/campaignApi";
+import {IGenericErrorMessage} from "@/types";
 
-const CreateProvidePage = () => {
-  const [createProvider] = useCreateProviderMutation();
+const Editor = dynamic(() => import("@/components/form/FormEditor"), {
+  ssr: false,
+});
+
+const CreateCampaignPage = () => {
+  const [createCampaign] = useCreateCampaignMutation();
   const router = useRouter();
 
+  const [email_body, set_email_body] = useState("");
+
   const onSubmit = async (values: any) => {
+    values.email_body = email_body;
+
+    // check email_body
+    if (!email_body) {
+      message.error("Email body is required");
+      return;
+    }
+    // check
     message.loading("Creating...");
+
     // console.log(values);
     try {
-      const res = await createProvider(values).unwrap();
+      const res = await createCampaign(values).unwrap();
       if (res?.id) {
-        message.success("Provider created successfully!");
-        router.push("/admin/provider");
+        set_email_body("");
+        message.success("Campaign created successfully!");
+        router.push("/admin/campaign");
       }
     } catch (err: any) {
-      console.error(err.message);
+      if (err.errorMessages) {
+        err.errorMessages?.map((item: IGenericErrorMessage) => {
+          message.error(item.message);
+        });
+      } else {
+        message.error(err.message);
+      }
     }
   };
 
@@ -42,17 +62,17 @@ const CreateProvidePage = () => {
             link: "/admin",
           },
           {
-            label: "provider",
-            link: "/admin/provider",
+            label: "campaign",
+            link: "/admin/campaign",
           },
         ]}
       />
-      <h1 className="text-2xl font-medium my-2">Create Provider</h1>
+      <h1 className="text-2xl font-medium my-2">Create Campaign</h1>
 
       <div>
         <Form
           submitHandler={onSubmit}
-          resolver={yupResolver(createProviderRequestSchema)}>
+          resolver={yupResolver(createCampaignRequestSchema)}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -65,85 +85,60 @@ const CreateProvidePage = () => {
                 fontSize: "18px",
                 marginBottom: "10px",
               }}>
-              Provider Information
+              Campaign Information
             </p>
             <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
               <Col
                 className="gutter-row"
                 span={8}
+                md={12}
                 style={{
                   marginBottom: "10px",
                 }}>
                 <FormInput
                   type="text"
-                  name="title"
+                  name="name"
                   size="large"
-                  label="Title"
+                  label="Campaign Name"
                 />
               </Col>
               <Col
                 className="gutter-row"
                 span={8}
+                md={12}
                 style={{
                   marginBottom: "10px",
                 }}>
-                <FormInput type="text" name="host" size="large" label="HOST" />
+                <FormProviderField name="provider_id" label="Provider" />
               </Col>
               <Col
                 className="gutter-row"
                 span={8}
-                style={{
-                  marginBottom: "10px",
-                }}>
-                <FormInputNumber name="port" size="large" label="PORT" />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
+                md={24}
                 style={{
                   marginBottom: "10px",
                 }}>
                 <FormInput
                   type="text"
-                  name="email"
+                  name="subject"
                   size="large"
-                  label="Email"
+                  label="Subject"
                 />
               </Col>
               <Col
                 className="gutter-row"
                 span={8}
+                md={24}
                 style={{
                   marginBottom: "10px",
                 }}>
-                <FormInput
-                  type="password"
-                  name="password"
-                  size="large"
-                  label="Password"
+                <Editor
+                  name="email_body"
+                  label="Body"
+                  value={email_body}
+                  setValue={set_email_body}
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}>
-                <FormSelectField
-                  size="large"
-                  name="secure"
-                  options={providerProtocolOptions}
-                  label="Secure"
-                  placeholder="Select"
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}></Col>
             </Row>
           </div>
           <div
@@ -158,41 +153,23 @@ const CreateProvidePage = () => {
                 fontSize: "18px",
                 marginBottom: "10px",
               }}>
-              IMap Options
+              Campaign User
             </p>
             <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
               <Col
                 className="gutter-row"
                 span={8}
+                md={24}
                 style={{
                   marginBottom: "10px",
                 }}>
-                <FormSelectField
+                <FormEmailSelectField
                   size="large"
-                  name="tls"
-                  options={providerIMapProtocolOptions}
-                  label="Protocol"
+                  name="emails"
+                  label="Emails"
                   placeholder="Select"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}>
-                <FormInputNumber
-                  name="imap_port"
-                  size="large"
-                  label="IMap port"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}></Col>
             </Row>
           </div>
 
@@ -205,8 +182,8 @@ const CreateProvidePage = () => {
   );
 };
 
-export default CreateProvidePage;
+export default CreateCampaignPage;
 
-CreateProvidePage.getLayout = function getLayout(page: React.ReactElement) {
+CreateCampaignPage.getLayout = function getLayout(page: React.ReactElement) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };

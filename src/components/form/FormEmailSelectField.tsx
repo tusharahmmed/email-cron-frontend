@@ -8,17 +8,18 @@ export type SelectOptions = {
 };
 
 type SelectFieldProps = {
-  options: SelectOptions[];
+  options?: SelectOptions[];
   name: string;
   size?: "large" | "small";
   value?: string | string[] | undefined;
   placeholder?: string;
   label?: string;
-  defaultValue?: SelectOptions;
+  defaultValue?: string | string[];
+  handleChange?: (el: string) => void;
   required?: boolean;
 };
 
-const FormMultiSelectField = ({
+const FormEmailSelectField = ({
   name,
   size = "large",
   value,
@@ -26,6 +27,7 @@ const FormMultiSelectField = ({
   options,
   label,
   defaultValue,
+  handleChange,
   required,
 }: SelectFieldProps) => {
   const {
@@ -56,10 +58,13 @@ const FormMultiSelectField = ({
         name={name}
         render={({field: {value, onChange}}) => (
           <Select
-            onChange={onChange}
+            onChange={handleChange ? handleChange : onChange}
+            mode="tags"
             size={size}
             options={options}
+            tokenSeparators={[",", ";"]}
             value={value}
+            defaultValue={defaultValue as unknown as string}
             className="rounded-lg"
             style={
               errorMessage
@@ -67,8 +72,6 @@ const FormMultiSelectField = ({
                 : {width: "100%"}
             }
             placeholder={placeholder}
-            allowClear
-            mode="multiple"
           />
         )}
       />
@@ -76,4 +79,4 @@ const FormMultiSelectField = ({
   );
 };
 
-export default FormMultiSelectField;
+export default FormEmailSelectField;

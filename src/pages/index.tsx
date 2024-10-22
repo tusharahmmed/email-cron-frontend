@@ -1,9 +1,18 @@
+"use client";
 import RootLayout from "@/layouts/RootLayout";
 
-export default function Home() {
-  return <>Homepage</>;
-}
+import {useRouter} from "next/router";
+import React, {useEffect} from "react";
 
-Home.getLayout = function getLayout(page: React.ReactElement) {
+const HomePage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/admin");
+  }, []);
+};
+
+export default HomePage;
+
+HomePage.getLayout = function getLayout(page: React.ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
